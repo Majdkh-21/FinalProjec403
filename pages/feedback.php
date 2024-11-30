@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Submit">
         </form>
     </div>
+    
 <?php include 'includes/footer.php'; ?>
 </body>
 </html>
