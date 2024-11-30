@@ -1,9 +1,10 @@
 <?php include '../includes/header.php'; ?>
 
 <?php
+// تفاصيل اتصال قاعدة البيانات
 $database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
 
-// Parse the URL
+// تحليل رابط الاتصال
 $db_url = parse_url($database_url);
 
 $host = $db_url["host"];
@@ -12,11 +13,25 @@ $username = $db_url["user"];
 $password = $db_url["pass"];
 $port = $db_url["port"];
 
-// Establish a connection to the MySQL database
+// إنشاء الاتصال بقاعدة البيانات
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("<p style='color:red; text-align:center;'>Connection failed: " . mysqli_connect_error() . "</p>");
+}
+
+// التحقق من وجود الجدول
+$table_check_query = "SHOW TABLES LIKE 'users'";
+$table_check_result = mysqli_query($conn, $table_check_query);
+if (mysqli_num_rows($table_check_result) == 0) {
+    $create_table_query = "CREATE TABLE users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        pass VARCHAR(255) NOT NULL
+    )";
+    if (!mysqli_query($conn, $create_table_query)) {
+        die("<p style='color:red; text-align:center;'>Error creating table: " . mysqli_error($conn) . "</p>");
+    }
 }
 
 // التحقق من طلب POST
@@ -71,7 +86,7 @@ $conn->close();
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
 
-            <label for="pass">password:</label>
+            <label for="pass">Password:</label>
             <input type="password" id="pass" name="pass" required><br><br>
 
             <button type="submit">Register</button>
