@@ -1,9 +1,11 @@
-<?php include '../includes/header.php'; ?>
-
 <?php
-$database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
+// جلب ملف الرأس
+include '../includes/header.php';
 
-// Parse the URL
+// معلومات الاتصال بقاعدة البيانات باستخدام URL العام
+$database_url = "mysql://root:NDOcmATZaFjHLsXTnqgFdVTKezgqrqvk@junction.proxy.rlwy.net:46016/railway";
+
+// تحليل معلومات الاتصال
 $db_url = parse_url($database_url);
 
 $host = $db_url["host"];
@@ -12,20 +14,21 @@ $username = $db_url["user"];
 $password = $db_url["pass"];
 $port = $db_url["port"];
 
-// Establish a connection to the MySQL database
+// إنشاء اتصال بقاعدة البيانات
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
+} else {
+    echo "<p style='color:green; text-align:center;'>Database connection successful!</p>";
 }
 
-
+// التعامل مع نموذج الإدخال
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
     $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES, 'UTF-8');
 
-
+    // التحقق من وجود البريد الإلكتروني مسبقاً
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -34,10 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         echo "<p style='color:red; text-align:center;'>An account with this email already exists.</p>";
     } else {
-        
+        // تشفير كلمة المرور
         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-        
+        // إدخال المستخدم الجديد
         $insert_stmt = $conn->prepare("INSERT INTO users (email, pass) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $email, $hashed_pass);
 
@@ -79,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
 
         <?php
-        
+        // عرض الشروط والأحكام
         if (isset($_GET['view_terms'])) {
             echo '
             <div class="pdf-viewer">
@@ -90,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>';
         }
 
-        
+        // عرض قائمة المستخدمين المسجلين
         $query = "SELECT * FROM users";
         $result = mysqli_query($conn, $query);
 
@@ -107,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<p style='color:blue; text-align:center;'>No registered users yet.</p>";
         }
 
-        
+        // إغلاق الاتصال بقاعدة البيانات
         $conn->close();
         ?>
     </div>
