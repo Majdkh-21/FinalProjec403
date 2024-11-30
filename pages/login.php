@@ -19,13 +19,13 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// التحقق من طلب POST
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // تنظيف المدخلات لمنع XSS
+
     $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
     $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES, 'UTF-8');
 
-    // التحقق من البريد الإلكتروني باستخدام prepared statement
+
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -34,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         echo "<p style='color:red; text-align:center;'>An account with this email already exists.</p>";
     } else {
-        // تجزئة كلمة المرور
+        
         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-        // إدخال بيانات جديدة باستخدام prepared statement
+        
         $insert_stmt = $conn->prepare("INSERT INTO users (email, pass) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $email, $hashed_pass);
 
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
 
         <?php
-        // عرض الشروط والأحكام عند الضغط على الرابط
+        
         if (isset($_GET['view_terms'])) {
             echo '
             <div class="pdf-viewer">
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>';
         }
 
-        // عرض البيانات من قاعدة البيانات
+        
         $query = "SELECT * FROM users";
         $result = mysqli_query($conn, $query);
 
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<p style='color:blue; text-align:center;'>No registered users yet.</p>";
         }
 
-        // إغلاق الاتصال بقاعدة البيانات
+        
         $conn->close();
         ?>
     </div>
