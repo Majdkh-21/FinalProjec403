@@ -8,7 +8,7 @@
             <li><a href="index.php">الصفحة الرئيسية</a></li>
             <li><a href="services.php">الخدمات</a></li>
             <li><a href="shop.php">المتجر</a></li>
-            <li><a href="feedback.php">الشكاوى</a></li>
+            <li><a href="/pages/feedback.php">الشكاوى</a></li>
             <li><a href="suggestions.php">الاقتراحات</a></li>
             <li><a href="contact.php">التواصل</a></li>
             <li><a href="video.php">احدث الملابس </a></li>
