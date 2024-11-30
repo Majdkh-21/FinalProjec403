@@ -5,7 +5,7 @@
 
     <nav class="navbar">
         <ul>
-            <li><a href="index.php">الصفحة الرئيسية</a></li>
+            <li><a href="../index.php">الصفحة الرئيسية</a></li>
             <li><a href="/pages/services.php">الخدمات</a></li>
             <li><a href="/pages/shop.php">المتجر</a></li>
             <li><a href="/pages/feedback.php">الشكاوى</a></li>
