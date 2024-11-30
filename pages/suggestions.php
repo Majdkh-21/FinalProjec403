@@ -2,13 +2,19 @@
 
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = ""; 
-$dbname = "testdb"; 
+$database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
 
+// Parse the URL
+$db_url = parse_url($database_url);
 
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$host = $db_url["host"];
+$dbname = ltrim($db_url["path"], '/');
+$username = $db_url["user"];
+$password = $db_url["pass"];
+$port = $db_url["port"];
+
+// Establish a connection to the MySQL database
+$conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 
 if (!$conn) {
@@ -21,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $suggestion = mysqli_real_escape_string($conn, $_POST['suggestion']);
 
 
-    $sql = "INSERT INTO project_db (name, suggestion) VALUES ('$name', '$suggestion')";
+    $sql = "INSERT INTO suggest (name, suggestion) VALUES ('$name', '$suggestion')";
 
     if (mysqli_query($conn, $sql)) {
         echo "<p style='color:green;'>شكراً لك! تم إرسال اقتراحك بنجاح.</p>";
