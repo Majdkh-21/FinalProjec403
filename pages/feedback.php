@@ -1,7 +1,7 @@
 <?php include '../includes/header.php'; ?>
 
 <?php
-// إعداد الاتصال بقاعدة البيانات
+
 $database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
 
 // Parse the URL

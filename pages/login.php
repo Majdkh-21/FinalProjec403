@@ -1,13 +1,19 @@
 <?php include '../includes/header.php'; ?>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "testdb";
+$database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
 
-// إنشاء اتصال بقاعدة البيانات
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Parse the URL
+$db_url = parse_url($database_url);
+
+$host = $db_url["host"];
+$dbname = ltrim($db_url["path"], '/');
+$username = $db_url["user"];
+$password = $db_url["pass"];
+$port = $db_url["port"];
+
+// Establish a connection to the MySQL database
+$conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
