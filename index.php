@@ -1,4 +1,4 @@
-<?php include '../includes/header.php'; ?>
+<?php include 'includes/header.php'; ?>
 <div class="welcome-section">
     <h1>مرحبا بكم في متجرنا</h1>
     <p>اكتشف أحدث العروض والمنتجات المميزة في متجر الأزياء</p>
