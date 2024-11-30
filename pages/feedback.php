@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <?php
 // إعداد الاتصال بقاعدة البيانات
@@ -95,6 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Submit">
         </form>
     </div>
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>
