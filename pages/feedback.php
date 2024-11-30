@@ -35,6 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<p style='color:red;'>حدث خطأ: " . mysqli_error($conn) . "</p>";
     }
+
+    $result = mysqli_query($con, "SELECT * FROM feedback");
+    while($row = mysqli_fetch_assoc($result)){
+    $name = $row["name"];
+    echo "$name";
+    }
+
+
+
+
+
 }
 ?>
 
