@@ -1,10 +1,9 @@
 <?php include '../includes/header.php'; ?>
 
 <?php
-// تفاصيل اتصال قاعدة البيانات
 $database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
 
-// تحليل رابط الاتصال
+// Parse the URL
 $db_url = parse_url($database_url);
 
 $host = $db_url["host"];
@@ -13,25 +12,11 @@ $username = $db_url["user"];
 $password = $db_url["pass"];
 $port = $db_url["port"];
 
-// إنشاء الاتصال بقاعدة البيانات
+// Establish a connection to the MySQL database
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
-    die("<p style='color:red; text-align:center;'>Connection failed: " . mysqli_connect_error() . "</p>");
-}
-
-// التحقق من وجود الجدول
-$table_check_query = "SHOW TABLES LIKE 'users'";
-$table_check_result = mysqli_query($conn, $table_check_query);
-if (mysqli_num_rows($table_check_result) == 0) {
-    $create_table_query = "CREATE TABLE users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        pass VARCHAR(255) NOT NULL
-    )";
-    if (!mysqli_query($conn, $create_table_query)) {
-        die("<p style='color:red; text-align:center;'>Error creating table: " . mysqli_error($conn) . "</p>");
-    }
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 // التحقق من طلب POST
@@ -66,9 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
-
-// إغلاق الاتصال بقاعدة البيانات
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +68,7 @@ $conn->close();
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
 
-            <label for="pass">Password:</label>
+            <label for="pass">password:</label>
             <input type="password" id="pass" name="pass" required><br><br>
 
             <button type="submit">Register</button>
@@ -107,6 +89,26 @@ $conn->close();
                 </object>
             </div>';
         }
+
+        // عرض البيانات من قاعدة البيانات
+        $query = "SELECT * FROM users";
+        $result = mysqli_query($conn, $query);
+
+        if ($result->num_rows > 0) {
+            echo "<h2>Registered Users</h2>";
+            echo "<table border='1' style='width:100%; text-align:center;'>";
+            echo "<tr><th>Email</th><th>Password (Hashed)</th></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr><td>" . htmlspecialchars($row['email'], ENT_QUOTES, 'UTF-8') . "</td>";
+                echo "<td>" . htmlspecialchars($row['pass'], ENT_QUOTES, 'UTF-8') . "</td></tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "<p style='color:blue; text-align:center;'>No registered users yet.</p>";
+        }
+
+        // إغلاق الاتصال بقاعدة البيانات
+        $conn->close();
         ?>
     </div>
 <?php include '../includes/footer.php'; ?>
