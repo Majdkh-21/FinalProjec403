@@ -2,7 +2,7 @@
 
 <?php
 
-$database_url = "mysql://root:dLAmBflfVGqLOuEVfLzJEkwDqaZprjyd@junction.proxy.rlwy.net:48554/railway";
+$database_url = "mysql://root:NDOcmATZaFjHLsXTnqgFdVTKezgqrqvk@junction.proxy.rlwy.net:46016/railway";
 
 // Parse the URL
 $db_url = parse_url($database_url);
@@ -37,15 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $result = mysqli_query($conn, "SELECT * FROM feedback");
-    while($row = mysqli_fetch_assoc($result)){
-    $name = $row["name"];
-    echo "$name";
+    while ($row = mysqli_fetch_assoc($result)) {
+        $name = $row["name"];
+        echo "$name";
     }
-
-
-
-
-
 }
 ?>
 
