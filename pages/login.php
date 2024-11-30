@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES, 'UTF-8');
 
     // التحقق من البريد الإلكتروني باستخدام prepared statement
-    $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
         // إدخال بيانات جديدة باستخدام prepared statement
-        $insert_stmt = $conn->prepare("INSERT INTO user (email, pass) VALUES (?, ?)");
+        $insert_stmt = $conn->prepare("INSERT INTO users (email, pass) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $email, $hashed_pass);
 
         if ($insert_stmt->execute()) {
