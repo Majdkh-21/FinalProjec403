@@ -1,10 +1,10 @@
 <?php include '../includes/header.php'; ?>
 
 <?php
-// استخدام الرابط من MYSQL_PUBLIC_URL
+
 $database_url = "mysql://root:NDOcmATZaFjHLsXTnqgFdVTKezgqrqvk@junction.proxy.rlwy.net:46016/railway";
 
-// تحليل الرابط
+
 $db_url = parse_url($database_url);
 
 $host = $db_url["host"];
@@ -13,7 +13,7 @@ $username = $db_url["user"];
 $password = $db_url["pass"];
 $port = $db_url["port"];
 
-// إنشاء اتصال بقاعدة البيانات
+
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
