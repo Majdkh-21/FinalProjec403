@@ -93,22 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>';
         }
 
-        // عرض قائمة المستخدمين المسجلين
-        $query = "SELECT * FROM users";
-        $result = mysqli_query($conn, $query);
 
-        if ($result->num_rows > 0) {
-            echo "<h2>Registered Users</h2>";
-            echo "<table border='1' style='width:100%; text-align:center;'>";
-            echo "<tr><th>Email</th><th>Password (Hashed)</th></tr>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . htmlspecialchars($row['email'], ENT_QUOTES, 'UTF-8') . "</td>";
-                echo "<td>" . htmlspecialchars($row['pass'], ENT_QUOTES, 'UTF-8') . "</td></tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "<p style='color:blue; text-align:center;'>No registered users yet.</p>";
-        }
 
         // إغلاق الاتصال بقاعدة البيانات
         $conn->close();
