@@ -84,7 +84,19 @@ footer ul li {
     color: white;
     font-size: 14px; 
 }
+footer .w3c-validation {
+    margin-top: 20px;
+}
 
+footer .w3c-validation a {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+footer .w3c-validation img {
+    height: 30px;
+    width: auto;
+}
 
 footer img {
     vertical-align: middle;
